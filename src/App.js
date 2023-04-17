@@ -11,7 +11,7 @@ function App() {
   return (
  
     <div className="App">
-      <p>隠れ名店.com</p>
+      <p>隠れ名店.com ちょっと更新</p>
       <input placeholder="場所を入力" onChange={(e) => {setString(e.target.value)}}>
       </input>
       <input placeholder="ジャンルを入力" onChange={(e) => {setString2(e.target.value)}}>
