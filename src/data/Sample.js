@@ -25,6 +25,32 @@ export const SampleData = [
         "user_ratings_total": "500",
     
 },
+{
+    "name": "再検索1 ",
+    "formatted_phone_number": "123-456-789",
+    "rating": "3.3",
+    "website":"麻布しきWEBSITEです",
+    "user_ratings_total": "130"
 
+},
 
-                            ];
+    {
+        "name": "再検索2 ",
+        "formatted_phone_number": "123-456-789",
+        "rating": "3.3",
+        "website":"麻布しきWEBSITEです",
+        "user_ratings_total": "130"
+
+},
+    
+            {
+                "name": "再検索3 ",
+                "formatted_phone_number": "123-456-789",
+                "rating": "3.3",
+                "website":"麻布しきWEBSITEです",
+                "user_ratings_total": "130"
+
+},
+
+];
+                            

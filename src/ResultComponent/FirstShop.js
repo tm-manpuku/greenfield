@@ -19,19 +19,18 @@ import { red } from '@mui/material/colors';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
 import photo1 from "../data/photo1.jpeg";
 // import Container from '@mui/material/Container';
+import {Main} from"../Main";
 
 
-const FirstShop = () =>{
-   const shopdata = SampleData[0];
-  
+
+const FirstShop = (props) =>{
+   const singleShopData = props.shopData[3*props.searchCount];
  return(
-
-   //  <Container maxWidth="sm">
    <Card sx={{ maxWidth: 345 }}>
    <CardHeader
      avatar={
        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-         麻
+         {3*props.searchCount+1}
        </Avatar>
      }
    //   action={
@@ -39,8 +38,8 @@ const FirstShop = () =>{
    //       <MoreVertIcon />
    //     </IconButton>
    //   }
-     title={shopdata.name}
-     subheader={"電話：" + shopdata.formatted_phone_number}
+     title={singleShopData.name}
+     subheader={"電話：" + singleShopData.formatted_phone_number}
    />
    <CardMedia
      component="img"
@@ -49,12 +48,12 @@ const FirstShop = () =>{
      alt="ShopPhoto"
    />
    <CardContent>
-      <Typography component="legend">平均評価：{shopdata.rating}</Typography>
-      <Rating name="half-rating-read" value={shopdata.rating}  precision={0.5} readOnly />
+      <Typography component="legend">平均評価：{singleShopData.rating}</Typography>
+      <Rating name="half-rating-read" value={singleShopData.rating}  precision={0.5} readOnly />
       <Typography component="legend"></Typography>
       {/* <ul>平均評価{}</ul> */}
-      <Typography component="legend">ユーザのコメント数：{shopdata.user_ratings_total}</Typography>
-      <Typography component="legend">穴場度：85点</Typography>
+      <Typography component="legend">ユーザのコメント数：{singleShopData.user_ratings_total}</Typography>
+      <Typography component="legend">穴場度:85点</Typography>
    </CardContent>
    {/* <CardActions disableSpacing>
      <IconButton aria-label="add to favorites">
@@ -66,7 +65,6 @@ const FirstShop = () =>{
    </CardActions> */}
 
        </Card>
-      //  </Container>
  );
 }
 

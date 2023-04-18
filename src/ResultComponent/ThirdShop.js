@@ -13,25 +13,24 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import { red } from '@mui/material/colors';
+import { indigo, red } from '@mui/material/colors';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 // import ShareIcon from '@mui/icons-material/Share';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
-import photo3 from "../data/photo3.jpeg";
-import Container from '@mui/material/Container';
+import photo1 from "../data/photo1.jpeg";
+// import Container from '@mui/material/Container';
+import {Main} from"../Main";
 
 
-const ThirdShop = () =>{
-   const shopdata = SampleData[2];
-  
+
+const ThirdShop = (props) =>{
+   const singleShopData = props.shopData[3*props.searchCount+2];
  return(
-
-    // <Container maxWidth="sm">
    <Card sx={{ maxWidth: 345 }}>
    <CardHeader
      avatar={
-       <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-         九
+       <Avatar sx={{ bgcolor: indigo[300] }} aria-label="recipe">
+         {3*props.searchCount+3}
        </Avatar>
      }
    //   action={
@@ -39,24 +38,22 @@ const ThirdShop = () =>{
    //       <MoreVertIcon />
    //     </IconButton>
    //   }
-     title={shopdata.name}
-     subheader={"電話：" + shopdata.formatted_phone_number}
+     title={singleShopData.name}
+     subheader={"電話：" + singleShopData.formatted_phone_number}
    />
    <CardMedia
      component="img"
      height="194"
-     image={photo3}
+     image={photo1}
      alt="ShopPhoto"
    />
    <CardContent>
-       <div className="shopdetail">
-      <Typography component="legend">平均評価：{shopdata.rating}</Typography>
-      <Rating name="half-rating-read" value={shopdata.rating}  precision={0.5} readOnly />
+      <Typography component="legend">平均評価：{singleShopData.rating}</Typography>
+      <Rating name="half-rating-read" value={singleShopData.rating}  precision={0.5} readOnly />
       <Typography component="legend"></Typography>
       {/* <ul>平均評価{}</ul> */}
-      <Typography component="legend">ユーザのコメント数：{shopdata.user_ratings_total}</Typography>
-      <Typography component="legend">穴場度：70点</Typography>
-      </div>
+      <Typography component="legend">ユーザのコメント数：{singleShopData.user_ratings_total}</Typography>
+      <Typography component="legend">穴場度:70点</Typography>
    </CardContent>
    {/* <CardActions disableSpacing>
      <IconButton aria-label="add to favorites">
@@ -68,7 +65,6 @@ const ThirdShop = () =>{
    </CardActions> */}
 
        </Card>
-    //    </Container>
  );
 }
 

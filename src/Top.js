@@ -12,12 +12,25 @@ import Card from '@mui/material/Card';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
+import { getShop } from "./utils/get";
 
-
-export const Top = () => {
+export const Top = (props) => {
   const navigate = useNavigate();
   const [locationState, setLocation] = useState('');
   const [genreState, setGenre] = useState('');
+  const initialURL = "https://rugmhzne06.execute-api.us-east-1.amazonaws.com/prod?query=" + locationState +"+"+ genreState;
+  
+  const getShopLists = async () => {
+    try {
+      const getShopData = await fetch(initialURL);
+      console.log(initialURL);
+      const result = await getShopData.json();
+      props.setShopData(result)
+    }catch(err){
+      console.log("検索に失敗しました");
+    }
+    
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,11 +72,16 @@ export const Top = () => {
         <Button
           variant="outlined"
           sx={{ mt: 3, mb: 2 }}
-          className="search" onClick={() => {
-            navigate("/main"
-      ,{state:{locationPara: {locationState},genrePara: {genreState}}}
-        );
-        }} >検索</Button>
+          className="search" 
+          onClick={
+          async() => {
+          await getShopLists();
+          navigate("/main",
+          {state:
+            {locationPara: {locationState},genrePara: {genreState}}
+          }
+          );
+        }}>検索</Button>
 
         </Box>
         </Paper>
