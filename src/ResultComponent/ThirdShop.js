@@ -26,7 +26,7 @@ import {Main} from"../Main";
 const ThirdShop = (props) =>{
    const singleShopData = props.shopData[3*props.searchCount+2];
  return(
-   <Card sx={{ maxWidth: 345 }}>
+   <Card sx={{ maxWidth: 345 }} style={{margin:'auto',width:'100%'}}>
    <CardHeader
      avatar={
        <Avatar sx={{ bgcolor: indigo[300] }} aria-label="recipe">

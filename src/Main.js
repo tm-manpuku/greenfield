@@ -6,6 +6,7 @@ import React from 'react';
 import FirstShop from './ResultComponent/FirstShop';
 import SecondShop from './ResultComponent/SecondShop';
 import ThirdShop from './ResultComponent/ThirdShop';
+import EmptyShop from './ResultComponent/EmptyShop';
 //import ShopTabBar from './ResultComponent/ShopTabBar';
 import 'react-tabs/style/react-tabs.css';
 import TextField from '@mui/material/TextField';
@@ -17,6 +18,8 @@ import TabPanel from '@mui/lab/TabPanel';
 import Grid from '@mui/material/Grid';
 import { Button } from "@mui/material"; 
 import { getShop } from "./utils/get";
+import { positions } from '@mui/system';
+import Box from '@mui/material/Box';
 
 
 export const Main = (props) => {
@@ -33,20 +36,21 @@ const handleChange = (event, newValue) => {
   let ThirdTab;
 
   if (props.shopData.length > (searchCount+1) * 3) {
-     button= <Button
+     button=
+      <Button
       variant="outlined"
-      sx={{ mt: 3, mb: 2 }}
+      // style={{margin:'auto'}}
+      sx={{ mt: 3, mb: 2 , position: "relative", top: 20}}
       className="search" onClick={() => {
         setSearchCount(searchCount + 1)
       }} >他の隠れ名店を探してみる</Button>
-
-    
   } else {
-    button= <Button
+    button= 
+     <Button
       variant="outlined"
-      sx={{ mt: 3, mb: 2 }}
+      // style={{margin:'auto'}}
+      sx={{ mt: 3, mb: 2 , position: "relative", top: 20}}
       className="search" disabled>他の隠れ名店を探してみる</Button>
-    
   }
    if (Math.floor(props.shopData.length /3)>= (searchCount)) {
      SecondTab= <TabPanel value="2">
@@ -60,9 +64,8 @@ const handleChange = (event, newValue) => {
    } else {
      SecondTab= <TabPanel value="2">
           <Container>
-      </Container>
-
-    </TabPanel>
+          </Container>
+        </TabPanel>
     
   }
 
@@ -94,7 +97,7 @@ const handleChange = (event, newValue) => {
 //   getShopLists();
 // }, []);
   return (
-     <Container maxWidth="sm">
+     <Grid Container alignItems='center' justifyContent='center' direction="column"　maxWidth="sm" sx={{alignItems: 'center'}}>
         <TextField
           margin="normal"
           required
@@ -112,9 +115,7 @@ const handleChange = (event, newValue) => {
           defaultValue={location.state.genrePara.genreState}
           //onChange={(e) => {setGenre(e.target.value)}}
         />
-      {/* <p>{location.state.locationPara.locationState}</p> 
-      <p>{location.state.genrePara.genreState}</p> */}
-      
+    <Box sx={{height:500}}>
     <TabContext value={value}>
         <TabList onChange={handleChange}  centered>
       <Tab label="おすすめ1" value="1" />
@@ -124,16 +125,18 @@ const handleChange = (event, newValue) => {
 
         <TabPanel value="1">
            <FirstShop searchCount={searchCount} shopData={props.shopData}/>
-    </TabPanel>
+        </TabPanel>
         {SecondTab}
         {ThirdTab}
         
       </TabContext>
+     </Box>
+     <Grid item xs={12}>
      {button} 
+     </Grid>
+     
     
-      
-    
-</Container>
+</Grid>
 
   );
 }
