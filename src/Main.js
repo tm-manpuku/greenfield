@@ -39,17 +39,16 @@ const handleChange = (event, newValue) => {
      button=
       <Button
       variant="outlined"
-      // style={{margin:'auto'}}
-      sx={{ mt: 3, mb: 2 , position: "relative", top: 20}}
+      sx={{ mx: '30%' , mt: 3, mb: 2 , position: "relative", top: 20}}
       className="search" onClick={() => {
         setSearchCount(searchCount + 1)
-      }} >他の隠れ名店を探してみる</Button>
+      }} >他の隠れ名店を探してみる
+      </Button>
   } else {
-    button= 
+    button=
      <Button
       variant="outlined"
-      // style={{margin:'auto'}}
-      sx={{ mt: 3, mb: 2 , position: "relative", top: 20}}
+      sx={{ mx: '30%' , mt: 3, mb: 2 , position: "relative", top: 20}}
       className="search" disabled>他の隠れ名店を探してみる</Button>
   }
    if (Math.floor(props.shopData.length /3)>= (searchCount)) {
@@ -85,19 +84,9 @@ const handleChange = (event, newValue) => {
     
   }
 
-   
-    
-// useLayoutEffect(() => {
-//   const getShopLists = async () => {
-//     console.log("test1");
-//     const getShopData = await getShop(initialURL);
-//     console.log("test2");
-//     setShopData(getShopData);
-//   };
-//   getShopLists();
-// }, []);
   return (
-     <Grid Container alignItems='center' justifyContent='center' direction="column"　maxWidth="sm" sx={{alignItems: 'center'}}>
+     <Grid container alignItems='center' justifyContent='center' direction="row" maxWidth="sm" columnSpacing={2} sx={{alignItems: 'center'}}>
+        <Grid item>
         <TextField
           margin="normal"
           required
@@ -106,7 +95,10 @@ const handleChange = (event, newValue) => {
           type="場所"
           defaultValue={location.state.locationPara.locationState}
           // onChange={(e) => {setLocation(e.target.value)}}
-        /><TextField
+        />
+        </Grid>
+        <Grid item>
+        <TextField
           margin="normal"
           required
           id="outlined-required"
@@ -115,6 +107,7 @@ const handleChange = (event, newValue) => {
           defaultValue={location.state.genrePara.genreState}
           //onChange={(e) => {setGenre(e.target.value)}}
         />
+        </Grid>
     <Box sx={{height:500}}>
     <TabContext value={value}>
         <TabList onChange={handleChange}  centered>
@@ -128,14 +121,13 @@ const handleChange = (event, newValue) => {
         </TabPanel>
         {SecondTab}
         {ThirdTab}
-        
+    
       </TabContext>
      </Box>
-     <Grid item xs={12}>
-     {button} 
-     </Grid>
-     
-    
+     <Container alignItems='center' justifyContent='center' direction="column" maxWidth="sm" sx={{alignItems: 'center'}}>
+     {button}
+     </Container>
+
 </Grid>
 
   );
