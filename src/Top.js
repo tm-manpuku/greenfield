@@ -19,10 +19,11 @@ export const Top = (props) => {
   const [locationState, setLocation] = useState('');
   const [genreState, setGenre] = useState('');
   const initialURL = "https://rugmhzne06.execute-api.us-east-1.amazonaws.com/prod?query=" + locationState +"+"+ genreState;
-  
+  const limitedURL = "https://q8ivytu0o8.execute-api.us-east-1.amazonaws.com/prod?query=" + locationState +"+"+ genreState;
+
   const getShopLists = async () => {
     try {
-      const getShopData = await fetch(initialURL);
+      const getShopData = await fetch(limitedURL);
       console.log(initialURL);
       const result = await getShopData.json();
       props.setShopData(result)
