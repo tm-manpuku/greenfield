@@ -47,10 +47,7 @@ export const Top = (props) => {
     >
     
       <Typography component="h1" variant="h5">
-         ねえ、ご飯屋さん開拓しない？
-      </Typography>/
-       <Typography component="h1" variant="h5">
-         今日のランチ新しいお店を開拓しませんか？早く決めるとお得に開拓できるよ！
+         隠れ名店.com
       </Typography>
         <TextField
           margin="normal"
