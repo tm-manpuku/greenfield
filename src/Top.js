@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
+import { LoadingButton } from '@mui/lab';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
@@ -21,9 +22,10 @@ export const Top = (props) => {
   const [genreState, setGenre] = useState('');
   const initialURL = "https://rugmhzne06.execute-api.us-east-1.amazonaws.com/prod?query=" + locationState +"+"+ genreState;
   const limitedURL = "https://q8ivytu0o8.execute-api.us-east-1.amazonaws.com/prod?query=" + locationState +"+"+ genreState;
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const getShopLists = async () => {
     try {
+      setIsLoading(true);
       const getShopData = await fetch(limitedURL);
       const resultOfShopData = await getShopData.json();
       //const getPhotoData = await fetch(resultOfShopData[0].photo);
@@ -51,7 +53,7 @@ export const Top = (props) => {
     
       <Typography component="h1" variant="h5">
          ねえ、ご飯屋さん開拓しない？
-      </Typography>/
+      </Typography>
        <Typography component="h1" variant="h5">
          今日のランチ新しいお店を開拓しませんか？早く決めるとお得に開拓できるよ！
       </Typography>
@@ -76,10 +78,12 @@ export const Top = (props) => {
           onChange={(e) => {setGenre(e.target.value)}}
         />
       
-        <Button
-          variant="outlined"
+        <LoadingButton
+          size="medium"
+          variant="contained"
           sx={{ mt: 3, mb: 2 }}
-          className="search" 
+          className="search"
+          loading={isLoading} 
           onClick={
           async() => {
           await getShopLists();
@@ -88,10 +92,10 @@ export const Top = (props) => {
             {locationPara: {locationState},genrePara: {genreState}}
           }
           );
-        }}>検索</Button>
+        }}>
+          <span>検索</span>
+          </LoadingButton>
 
-        {isLoading && 
-        <CircularProgress />}
         </Box>
         </Paper>
       </Container>

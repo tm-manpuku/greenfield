@@ -33,6 +33,7 @@ const location = useLocation();
 const [searchCount, setSearchCount] = useState(0);
 const [value, setValue] = useState("1");
 const [open, setOpen] = useState(false);
+const couponArray = [500,200];
 const handleClickOpen = () => {
   setOpen(true);
 };
@@ -45,7 +46,6 @@ const handleChange = (event, newValue) => {
   setValue(newValue);
 }
   let button;
-
   if (props.shopData.length > searchCount+1) {
      button=
       <Button
@@ -63,19 +63,27 @@ const handleChange = (event, newValue) => {
       sx={{ mx: '30%' , mt: 3, mb: 2 , position: "relative", top: 20}}
       className="search" disabled>他のお店を開拓</Button>
   }
+  let couponButton;
+  if(searchCount<2){
+    couponButton=
+    <Button variant="contained">{couponArray.searchCount}円割引クーポンを取得する</Button>
+  }
   return (
-     <Grid container alignItems='center' justifyContent='center' direction="row" maxWidth="sm" columnSpacing={2} sx={{alignItems: 'center'}}>
+    
+     <Grid container alignitems='center' justifycontent='center' direction="column" maxWidth="sm" columnSpacing={2} sx={{alignItems: 'center'}}>
+      <Box>
         <Grid item>
         <Typography component="legend">エリア:{location.state.locationPara.locationState}</Typography>
         </Grid>
         <Grid item>
         <Typography component="legend">ジャンル:{location.state.genrePara.genreState}</Typography>
         </Grid>
-        
+      </Box>  
      <Box sx={{height:500}}>
            <FirstShop searchCount={searchCount} shopData={props.shopData}/>
      </Box>
-     <Container alignItems='center' justifyContent='center' direction="column" maxWidth="sm" sx={{alignItems: 'center'}}>
+     <Container alignitems='center' justifycontent='center' direction="column" maxWidth="sm" sx={{alignItems: 'center'}}>
+     {couponButton}
      <Button
       variant="outlined"
       sx={{ mx: '30%' , mt: 3, mb: 2 , position: "relative", top: 20}}
@@ -84,8 +92,7 @@ const handleChange = (event, newValue) => {
       href={targetShopURL}>
       このお店に行く！
       </Button>
-     
-     {button}
+      {button}
      <Container>
      <Dialog
        open={open}
