@@ -13,6 +13,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import { getShop } from "./utils/get";
+import { CircularProgress } from '@mui/material';
 
 export const Top = (props) => {
   const navigate = useNavigate();
@@ -20,13 +21,15 @@ export const Top = (props) => {
   const [genreState, setGenre] = useState('');
   const initialURL = "https://rugmhzne06.execute-api.us-east-1.amazonaws.com/prod?query=" + locationState +"+"+ genreState;
   const limitedURL = "https://q8ivytu0o8.execute-api.us-east-1.amazonaws.com/prod?query=" + locationState +"+"+ genreState;
-
+  const [isLoading, setIsLoading] = useState(true);
   const getShopLists = async () => {
     try {
       const getShopData = await fetch(limitedURL);
-      console.log(initialURL);
-      const result = await getShopData.json();
-      props.setShopData(result)
+      const resultOfShopData = await getShopData.json();
+      //const getPhotoData = await fetch(resultOfShopData[0].photo);
+      //console.log(getPhotoData);
+      props.setShopData(resultOfShopData);
+      setIsLoading(false);
     }catch(err){
       console.log("検索に失敗しました");
     }
@@ -87,6 +90,8 @@ export const Top = (props) => {
           );
         }}>検索</Button>
 
+        {isLoading && 
+        <CircularProgress />}
         </Box>
         </Paper>
       </Container>

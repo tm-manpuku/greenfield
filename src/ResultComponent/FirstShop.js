@@ -30,7 +30,7 @@ const FirstShop = (props) =>{
    <CardHeader
      avatar={
        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-         {3*props.searchCount+1}
+         {props.searchCount+1}
        </Avatar>
      }
    //   action={
@@ -44,7 +44,7 @@ const FirstShop = (props) =>{
    <CardMedia
      component="img"
      height="194"
-     image={photo1}
+     image={singleShopData.photo}
      alt="ShopPhoto"
    />
    <CardContent>
