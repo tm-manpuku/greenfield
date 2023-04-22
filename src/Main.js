@@ -26,11 +26,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
+import couponQR from "./data/couponQR.png"
 
 export const Main = (props) => {
 const location = useLocation();
 const [searchCount, setSearchCount] = useState(0);
+const [couponview,setCouponView] = useState(true);
 const [value, setValue] = useState("1");
 const [open, setOpen] = useState(false);
 const couponArray = [500,200];
@@ -39,6 +40,9 @@ const handleClickOpen = () => {
 };
 const handleClose = () => {
   setOpen(false);
+};
+const handleCouponView = () =>{
+  setCouponView(false);
 };
 // const [shopData,setShopData] = useState("");
 const targetShopURL = "https://www.google.com/maps/dir/?api=1&destination=" + props.shopData[searchCount].name + "&destination_place_id=" + props.shopData[searchCount].place_id
@@ -64,10 +68,23 @@ const handleChange = (event, newValue) => {
       className="search" disabled>他のお店を開拓</Button>
   }
   let couponButton;
-  if(searchCount<2){
+  if(searchCount<2 && couponview){
     couponButton=
-    <Button variant="contained">{couponArray.searchCount}円割引クーポンを取得する</Button>
+    <Button 
+      variant="contained" 
+      onClick={()=>{handleCouponView()}}>
+      {couponArray[searchCount]}円割引クーポンを取得する</Button>
+  }else if(searchCount<2 && !couponview){
+    couponButton=
+    <>
+    <Button
+        variant="outlined"
+        disabled>
+        クーポンを取得しました</Button>
+      <img src={couponQR} height="280" width="280" alt="クーポンの取得に失敗しました"/>
+    </>
   }
+
   return (
     
      <Grid container alignitems='center' justifycontent='center' direction="column" maxWidth="sm" columnSpacing={2} sx={{alignItems: 'center'}}>
