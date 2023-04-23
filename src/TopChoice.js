@@ -14,28 +14,27 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import { getShop } from "./utils/get";
 import { Top } from "./Top";
+import { LoadingButton } from "@mui/lab";
 
 export const TopChoice = (props) => {
   const navigate = useNavigate();
   const [locationState, setLocation] = useState("");
   const [genreState, setGenre] = useState("");
   const initialURL =
-    "https://rugmhzne06.execute-api.us-east-1.amazonaws.com/prod?query=" +
-    locationState +
-    "+" +
-    genreState;
+    "https://rugmhzne06.execute-api.us-east-1.amazonaws.com/prod?query=xxx";
   const limitedURL =
     "https://q8ivytu0o8.execute-api.us-east-1.amazonaws.com/prod?query=" +
     locationState +
     "+" +
     genreState;
-
+  const [isLoading, setIsLoading] = useState(false);
   const getShopLists = async () => {
     try {
+      setIsLoading(true);
       const getShopData = await fetch(limitedURL);
-      console.log(initialURL);
       const result = await getShopData.json();
       props.setShopData(result);
+      setIsLoading(false);
     } catch (err) {
       console.log("検索に失敗しました");
     }
@@ -85,11 +84,13 @@ export const TopChoice = (props) => {
             }}
           />
 
-          <Button
-            variant="outlined"
+            <LoadingButton
+            size="medium"
+            variant="contained"
             sx={{ mt: 3, mb: 2 }}
             className="search"
-            onClick={async () => {
+            loading={isLoading}
+            onClick={async() => {
               await getShopLists();
               navigate("/main", {
                 state: {
@@ -99,8 +100,8 @@ export const TopChoice = (props) => {
               });
             }}
           >
-            開拓する！
-          </Button>
+            <span>開拓してみる！</span>
+          </LoadingButton>
         </Box>
       </Paper>
     </Container>

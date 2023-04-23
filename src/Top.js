@@ -14,43 +14,19 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import { getShop } from "./utils/get";
-import { CircularProgress } from "@mui/material";
+import Background from "./TopBackgroud.jpg";
 
 export const Top = (props) => {
   const navigate = useNavigate();
   const [locationState, setLocation] = useState("");
   const [genreState, setGenre] = useState("");
-  const initialURL =
-    "https://rugmhzne06.execute-api.us-east-1.amazonaws.com/prod?query=" +
-    locationState +
-    "+" +
-    genreState;
-  const limitedURL =
-    "https://q8ivytu0o8.execute-api.us-east-1.amazonaws.com/prod?query=" +
-    locationState +
-    "+" +
-    genreState;
-  const [isLoading, setIsLoading] = useState(false);
-  // const getShopLists = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     const getShopData = await fetch(limitedURL);
-  //     const resultOfShopData = await getShopData.json();
-  //     //const getPhotoData = await fetch(resultOfShopData[0].photo);
-  //     //console.log(getPhotoData);
-  //     props.setShopData(resultOfShopData);
-  //     setIsLoading(false);
-  //   } catch (err) {
-  //     console.log("検索に失敗しました");
-  //   }
-  // };
 
   return (
     <Container
       component="main"
       maxWidth="xs"
       style={{
-        backgroundImage: `url(${"./topimage_fried-egg-with-guacamole-sandwiches.jpg"})`,
+        backgroundImage: `url(${Background})`,
       }}
     >
       <Paper
@@ -72,33 +48,13 @@ export const Top = (props) => {
           <Typography component="h1" variant="h6">
             今日のランチ新しいお店を開拓しませんか？早く決めるとお得に開拓できるよ！
           </Typography>
-          {/* <TextField
-          margin="normal"
-          required
-          fullWidth
-          autoFocus
-          id="outlined-required"
-          label="場所"
-          type="場所"
-          onChange={(e) => {setLocation(e.target.value)}}
-        />
-         <TextField
-          margin="normal"
-          required
-          fullWidth
-          autoFocus
-          id="outlined-required"
-          label="ジャンル"
-          type="ジャンル"
-          onChange={(e) => {setGenre(e.target.value)}}
-        /> */}
 
           <LoadingButton
             size="medium"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             className="search"
-            loading={isLoading}
+            //loading={isLoading}
             onClick={() => {
               navigate("/choice", {
                 state: {
@@ -109,7 +65,7 @@ export const Top = (props) => {
               // }
             }}
           >
-            <span>冒険してみる！</span>
+            <span>情報を入力する</span>
           </LoadingButton>
         </Box>
       </Paper>

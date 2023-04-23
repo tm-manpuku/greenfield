@@ -53,7 +53,7 @@ const FirstShop = (props) =>{
       <Typography component="legend"></Typography>
       {/* <ul>平均評価{}</ul> */}
       <Typography component="legend">ユーザのコメント数：{singleShopData.user_ratings_total}</Typography>
-      <Typography component="legend">穴場度:85点</Typography>
+      {/* <Typography component="legend">穴場度:85点</Typography> */}
    </CardContent>
    {/* <CardActions disableSpacing>
      <IconButton aria-label="add to favorites">

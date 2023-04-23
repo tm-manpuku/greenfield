@@ -22,6 +22,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import theme from "./ColorTheme";
 import { ThemeProvider } from "@mui/material";
 import { CssBaseline } from "@mui/material";
+import Background from "./TopBackgroud.jpg";
 
 const pages = ["Home", "Shop", "History"];
 const settings = ["Profile", "Logout"];
@@ -51,7 +52,7 @@ function App() {
       <CssBaseline />
       <>
         <AppBar position="static">
-          <Container maxWidth="xl">
+          <Container maxWidth="xl" >
             <Toolbar disableGutters>
               <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
               <Typography
@@ -178,7 +179,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Top setShopData={setShopData} />} />
-            <Route path="choice" element={<TopChoice shopData={shopData} />} />
+            <Route path="choice" element={<TopChoice shopData={shopData} setShopData={setShopData}/>} />
             <Route path="main" element={<Main shopData={shopData} />} />
           </Routes>
         </BrowserRouter>
