@@ -91,7 +91,10 @@ const FirstShop = (props) =>{
     >
     
       <ListItemButton 
-      onClick={navigate("/review")}>
+      // onClick={navigate("/review", {
+      //   state: {}})}
+      onClick={handleClick}  
+        >
         <ListItemIcon>
           <CommentIcon />
         </ListItemIcon>

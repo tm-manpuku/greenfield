@@ -187,7 +187,7 @@ function App() {
             <Route path="choice" element={<TopChoice shopData={shopData} setShopData={setShopData}/>} />
             <Route path="coupon" element={<Coupon shopData={shopData} searchCount={searchCount} emailState={emailState}/>}/>
             <Route path="main" element={<Main shopData={shopData} searchCount={searchCount} setSearchCount={setSearchCount} emailState={emailState}/>} />
-            <Route path="review" element={<Review />} shopData={shopData} searchCount={searchCount} />
+            <Route path="review" element={<Review  shopData={shopData} searchCount={searchCount} />} />
           </Routes>
         </BrowserRouter>
       </>

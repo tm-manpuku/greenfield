@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 export const Main = (props) => {
 const location = useLocation();
 const navigate = useNavigate();
-const [searchCount, setSearchCount] = useState(0);
+//const [searchCount, setSearchCount] = useState(0);
 const [couponview,setCouponView] = useState(true);
 const [value, setValue] = useState("1");
 const [open, setOpen] = useState(false);
@@ -74,6 +74,7 @@ const handleChange = (event, newValue) => {
       }} >
       {couponArray[props.searchCount]}円割引クーポンを取得して
       このお店に行く！</Button>
+
   }
   return (
     
@@ -100,6 +101,18 @@ const handleChange = (event, newValue) => {
       href={targetShopURL}>
       このお店に行く！
       </Button> */}
+      
+      <Button
+            size="medium"
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            className="search"
+            onClick={() => {
+              navigate("/review")
+            }}
+          >
+            <span>レビューコメント読む</span>
+          </Button>
 
       {button}
      <Container>
@@ -109,7 +122,7 @@ const handleChange = (event, newValue) => {
        aria-labelledby="alert-dialog-title"
        aria-describedby="alert-dialog-description"
        >
-                <DialogTitle id="alert-dialog-title">
+        <DialogTitle id="alert-dialog-title">
           {"次の店舗を探すと割引額が減ります！"}
         </DialogTitle>
         <DialogContent>

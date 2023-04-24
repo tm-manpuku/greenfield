@@ -16,6 +16,7 @@ import Paper from "@mui/material/Paper";
 import { getShop } from "./utils/get";
 import Background from "./TopBackgroud.jpg";
 import TopLogoimage from "./TopLogoimage.png";
+import couponExplain from "./couponExplain.png";
 
 
 
@@ -25,6 +26,8 @@ export const Top = (props) => {
   const [locationState, setLocation] = useState("");
   const [genreState, setGenre] = useState("");
   const registerURL = "https://zg375fp37c.execute-api.us-east-1.amazonaws.com/sample?userid=" + props.emailState;
+  const [clickCount, setCount] = useState(0);
+
 
   const getEmailRegister = async () => {
     try {
@@ -33,6 +36,8 @@ export const Top = (props) => {
       console.log("検索に失敗しました");
     }
   };
+
+
 
   return (
     <Container
@@ -55,7 +60,55 @@ export const Top = (props) => {
             alignItems: "center",
           }}
         > */}
-          <img src={TopLogoimage} />
+<>
+        {clickCount == 0 ?
+          <img src={TopLogoimage} onClick={() => setCount(clickCount + 1)} /> :
+          clickCount == 1 ?
+              <img src={couponExplain} height="330" width="330" onClick={() => setCount(clickCount + 1)} />:
+          <>
+         <Typography component="h1" variant="h5">
+            Emailを入力して始めよう!
+          </Typography>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            autoFocus
+            id="outlined-required"
+            label="E-mail"
+            type="E-mailを入力"
+            onChange={(e) => {
+              props.setEmailAdress(e.target.value);
+            }}
+          />
+          <LoadingButton
+            size="medium"
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            className="search"
+            //loading={isLoading}
+            onClick={async() => {
+              await getEmailRegister()
+              navigate("/choice", {
+                state: {
+                  // locationPara: { locationState },
+                  // genrePara: { genreState },
+                },
+              });
+              // }
+            }}
+          >
+           
+            <span>お店を開拓してみる</span>
+          </LoadingButton>
+          </>
+          }
+</>
+
+         
+
+
+        
           {/* <Typography component="h1" variant="h4">
             ねえ、ご飯屋さん開拓しない？
           </Typography>
@@ -63,8 +116,7 @@ export const Top = (props) => {
             今日のランチ新しいお店を開拓しませんか？早く決めるとお得に開拓できるよ！
           </Typography> */}
 
-
-          <Typography component="h1" variant="h8">
+          {/* <Typography component="h1" variant="h8">
             Emailを入力して始めよう!
           </Typography>
           <TextField
@@ -98,7 +150,7 @@ export const Top = (props) => {
           >
            
             <span>お店を開拓する</span>
-          </LoadingButton>
+          </LoadingButton> */}
         {/* </Box> */}
       </Paper>
     </Container>

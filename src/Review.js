@@ -2,21 +2,8 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Grid } from "@mui/material";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Card from "@mui/material/Card";
-import { LoadingButton } from "@mui/lab";
-import CssBaseline from "@mui/material/CssBaseline";
+
 import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import { getShop } from "./utils/get";
-import Background from "./TopBackgroud.jpg";
-import TopLogoimage from "./TopLogoimage.png";
-import couponQR from "./data/couponQR.png"
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -27,6 +14,11 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import CommentIcon from '@mui/icons-material/Comment';
 
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export const Review = (props) => {
   const singleShopData = props.shopData[props.searchCount];
@@ -43,13 +35,40 @@ export const Review = (props) => {
   </ListItemButton>
    )
   };
+
+  const accordionReviewData = [];
+  for (let i = 0; i < singleShopData.reviews.length; i++){
+    accordionReviewData.push(
+        <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls= {i + "panel-content"}
+          id= {i + "panel-content"}
+        >
+          <Typography>Review {i+1}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            {singleShopData.reviews[i]}
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+    )
+  };
+
   return (
+    <>
+    <div>
+     {accordionReviewData}
+    </div>
+    
+
+
+
+
     <Container
       component="main"
       maxWidth="xs"
-      style={{
-        backgroundImage: `url(${Background})`,
-      }}
     >
       <List
       sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
@@ -76,6 +95,7 @@ export const Review = (props) => {
       </Collapse>
     </List>
     </Container>
+    </>
   );
 };
 
