@@ -1,24 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
 import { useLocation } from "react-router-dom";
 import { useState, useLayoutEffect, useEffect } from 'react';
 import React from 'react';
 import FirstShop from './ResultComponent/FirstShop';
-import SecondShop from './ResultComponent/SecondShop';
-import ThirdShop from './ResultComponent/ThirdShop';
-import EmptyShop from './ResultComponent/EmptyShop';
 //import ShopTabBar from './ResultComponent/ShopTabBar';
 import 'react-tabs/style/react-tabs.css';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
 import Grid from '@mui/material/Grid';
 import { Button, Dialog } from "@mui/material"; 
-import { getShop } from "./utils/get";
-import { positions } from '@mui/system';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 //import Dialog from '@mui/material/Dialog';
@@ -26,10 +16,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import couponQR from "./data/couponQR.png"
+import { useNavigate } from "react-router-dom";
 
 export const Main = (props) => {
 const location = useLocation();
+const navigate = useNavigate();
 const [searchCount, setSearchCount] = useState(0);
 const [couponview,setCouponView] = useState(true);
 const [value, setValue] = useState("1");
@@ -44,13 +35,12 @@ const handleClose = () => {
 const handleCouponView = () =>{
   setCouponView(false);
 };
-// const [shopData,setShopData] = useState("");
-const targetShopURL = "https://www.google.com/maps/dir/?api=1&destination=" + props.shopData[searchCount].name + "&destination_place_id=" + props.shopData[searchCount].place_id
+
 const handleChange = (event, newValue) => {
   setValue(newValue);
 }
   let button;
-  if (props.shopData.length > searchCount+1) {
+  if (props.shopData.length > props.searchCount+1) {
      button=
       <Button
       variant="outlined"
@@ -67,24 +57,24 @@ const handleChange = (event, newValue) => {
       sx={{ mx: '30%' , mt: 3, mb: 2 , position: "relative", top: 20}}
       className="search" disabled>他のお店を開拓</Button>
   }
+
   let couponButton;
-  if(searchCount<2 && couponview){
+  if(props.searchCount<2 && couponview){
     couponButton=
     <Button 
       variant="contained" 
-      onClick={()=>{handleCouponView()}}>
-      {couponArray[searchCount]}円割引クーポンを取得する</Button>
-  }else if(searchCount<2 && !couponview){
-    couponButton=
-    <>
-    <Button
-        variant="outlined"
-        disabled>
-        クーポンを取得しました</Button>
-      <img src={couponQR} height="280" width="280" alt="クーポンの取得に失敗しました"/>
-    </>
+      onClick={()=>
+      {handleCouponView()
+        navigate("/Coupon", {
+          state: {
+            // locationPara: { locationState },
+            // genrePara: { genreState },
+          },
+        });
+      }} >
+      {couponArray[props.searchCount]}円割引クーポンを取得して
+      このお店に行く！</Button>
   }
-
   return (
     
      <Grid container alignitems='center' justifycontent='center' direction="column" maxWidth="sm" columnSpacing={2} sx={{alignItems: 'center'}}>
@@ -97,18 +87,20 @@ const handleChange = (event, newValue) => {
         </Grid>
       </Box>  
      <Box sx={{height:500}}>
-           <FirstShop searchCount={searchCount} shopData={props.shopData}/>
+           <FirstShop searchCount={props.searchCount} shopData={props.shopData}/>
      </Box>
      <Container alignitems='center' justifycontent='center' direction="column" maxWidth="sm" sx={{alignItems: 'center'}}>
      {couponButton}
-     <Button
-      variant="outlined"
+
+     {/* <Button
+      variant="contained"
       sx={{ mx: '30%' , mt: 3, mb: 2 , position: "relative", top: 20}}
       className="search"
       target="_blank" 
       href={targetShopURL}>
       このお店に行く！
-      </Button>
+      </Button> */}
+
       {button}
      <Container>
      <Dialog
@@ -130,7 +122,7 @@ const handleChange = (event, newValue) => {
           <Button onClick={handleClose}>やめる</Button>
           <Button onClick={
             () => {
-            setSearchCount(searchCount + 1)
+            props.setSearchCount(props.searchCount + 1)
             handleClose()}}
           autoFocus>
             次の店舗を検索する！

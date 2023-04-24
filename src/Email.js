@@ -24,15 +24,7 @@ export const Top = (props) => {
   const navigate = useNavigate();
   const [locationState, setLocation] = useState("");
   const [genreState, setGenre] = useState("");
-  const registerURL = "https://zg375fp37c.execute-api.us-east-1.amazonaws.com/sample?userid=" + props.emailState;
-
-  const getEmailRegister = async () => {
-    try {
-      const getShopData = await fetch(registerURL);
-    } catch (err) {
-      console.log("検索に失敗しました");
-    }
-  };
+  
 
   return (
     <Container
@@ -47,14 +39,14 @@ export const Top = (props) => {
         sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
       >
         <CssBaseline />
-        {/* <Box
+        <Box
           sx={{
             marginTop: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
-        > */}
+        >
           <img src={TopLogoimage} />
           {/* <Typography component="h1" variant="h4">
             ねえ、ご飯屋さん開拓しない？
@@ -64,8 +56,8 @@ export const Top = (props) => {
           </Typography> */}
 
 
-          <Typography component="h1" variant="h8">
-            Emailを入力して始めよう!
+          <Typography component="h1" variant="h6">
+            今日のランチ新しいお店を開拓しませんか？早く決めるとお得に開拓できるよ！
           </Typography>
           <TextField
             margin="normal"
@@ -76,7 +68,7 @@ export const Top = (props) => {
             label="E-mail"
             type="E-mailを入力"
             onChange={(e) => {
-              props.setEmailAdress(e.target.value);
+              setEmail(e.target.value);
             }}
           />
           <LoadingButton
@@ -85,8 +77,7 @@ export const Top = (props) => {
             sx={{ mt: 3, mb: 2 }}
             className="search"
             //loading={isLoading}
-            onClick={async() => {
-              await getEmailRegister()
+            onClick={() => {
               navigate("/choice", {
                 state: {
                   // locationPara: { locationState },
@@ -97,9 +88,9 @@ export const Top = (props) => {
             }}
           >
            
-            <span>お店を開拓する</span>
+            <span>サービスを利用する</span>
           </LoadingButton>
-        {/* </Box> */}
+        </Box>
       </Paper>
     </Container>
   );

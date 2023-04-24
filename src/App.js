@@ -3,7 +3,9 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Main } from "./Main";
 import { Top } from "./Top";
+import { Coupon } from "./Coupon";
 import { TopChoice } from "./TopChoice.js";
+import { Review } from "./Review.js";
 import { useState } from "react";
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
@@ -23,6 +25,7 @@ import theme from "./ColorTheme";
 import { ThemeProvider } from "@mui/material";
 import { CssBaseline } from "@mui/material";
 import Background from "./TopBackgroud.jpg";
+//import Background from "./TopLogoimage.png";
 
 const pages = ["Home", "Shop", "History"];
 const settings = ["Profile", "Logout"];
@@ -31,6 +34,8 @@ function App() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [shopData, setShopData] = useState([]);
+  const [emailState, setEmailAdress] = useState("");
+  const [searchCount, setSearchCount] = useState(0);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -178,9 +183,11 @@ function App() {
 
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Top setShopData={setShopData} />} />
+            <Route path="/" element={<Top emailState={emailState} setEmailAdress={setEmailAdress} />} />
             <Route path="choice" element={<TopChoice shopData={shopData} setShopData={setShopData}/>} />
-            <Route path="main" element={<Main shopData={shopData} />} />
+            <Route path="coupon" element={<Coupon shopData={shopData} searchCount={searchCount} emailState={emailState}/>}/>
+            <Route path="main" element={<Main shopData={shopData} searchCount={searchCount} setSearchCount={setSearchCount} emailState={emailState}/>} />
+            <Route path="review" element={<Review />} shopData={shopData} searchCount={searchCount} />
           </Routes>
         </BrowserRouter>
       </>

@@ -30,11 +30,13 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import CommentIcon from '@mui/icons-material/Comment';
+import { useNavigate } from "react-router-dom";
 
 
 const FirstShop = (props) =>{
+   const navigate = useNavigate();
    const singleShopData = props.shopData[props.searchCount];
-   const [open, setOpen] = React.useState(true);
+   const [open, setOpen] = React.useState(false);
 
    const handleClick = () => {
      setOpen(!open);
@@ -46,9 +48,7 @@ const FirstShop = (props) =>{
  <ListItemText primary={singleShopData.reviews[i]} />
  </ListItemButton>
   )
-  console.log(i);
  };
- const test = [<ul>test1</ul>, <ul>test2</ul>];
 
  return(
    <Card sx={{ maxWidth: 345 }} style={{margin:'auto',width:'100%'}}>
@@ -90,7 +90,8 @@ const FirstShop = (props) =>{
       }
     >
     
-      <ListItemButton onClick={handleClick}>
+      <ListItemButton 
+      onClick={navigate("/review")}>
         <ListItemIcon>
           <CommentIcon />
         </ListItemIcon>
