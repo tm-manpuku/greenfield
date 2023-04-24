@@ -20,11 +20,36 @@ import { red } from '@mui/material/colors';
 import photo1 from "../data/photo1.jpeg";
 // import Container from '@mui/material/Container';
 import {Main} from"../Main";
-
+import * as React from 'react';
+import ListSubheader from '@mui/material/ListSubheader';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import CommentIcon from '@mui/icons-material/Comment';
 
 
 const FirstShop = (props) =>{
    const singleShopData = props.shopData[props.searchCount];
+   const [open, setOpen] = React.useState(true);
+
+   const handleClick = () => {
+     setOpen(!open);
+   };
+ const reviewData = [];
+ for (let i= 0; i<singleShopData.reviews.length; i++){
+  reviewData.push(
+ <ListItemButton sx={{ pl: 4 }}>
+ <ListItemText primary={singleShopData.reviews[i]} />
+ </ListItemButton>
+  )
+  console.log(i);
+ };
+ const test = [<ul>test1</ul>, <ul>test2</ul>];
+
  return(
    <Card sx={{ maxWidth: 345 }} style={{margin:'auto',width:'100%'}}>
    <CardHeader
@@ -53,6 +78,32 @@ const FirstShop = (props) =>{
       <Typography component="legend"></Typography>
       {/* <ul>平均評価{}</ul> */}
       <Typography component="legend">ユーザのコメント数：{singleShopData.user_ratings_total}</Typography>
+      
+      <List
+      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+      subheader={
+        <ListSubheader component="div" id = "nested-list-subheader" >
+          口コミを見てみる
+        </ListSubheader>
+      }
+    >
+    
+      <ListItemButton onClick={handleClick}>
+        <ListItemIcon>
+          <CommentIcon />
+        </ListItemIcon>
+        <ListItemText primary = "Review" />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+            {reviewData}
+        </List>
+      </Collapse>
+    </List>
+
       {/* <Typography component="legend">穴場度:85点</Typography> */}
    </CardContent>
    {/* <CardActions disableSpacing>
