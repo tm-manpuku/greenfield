@@ -21,11 +21,12 @@ import { useNavigate } from "react-router-dom";
 export const Main = (props) => {
 const location = useLocation();
 const navigate = useNavigate();
-//const [searchCount, setSearchCount] = useState(0);
 const [couponview,setCouponView] = useState(true);
 const [value, setValue] = useState("1");
 const [open, setOpen] = useState(false);
 const couponArray = [500,200];
+const [searchCount, setSearchCount] = useState(0);
+
 const handleClickOpen = () => {
   setOpen(true);
 };
@@ -39,8 +40,14 @@ const handleCouponView = () =>{
 const handleChange = (event, newValue) => {
   setValue(newValue);
 }
+localStorage.setItem("searchCount",0);
+const LSshopData = JSON.parse(localStorage.getItem("shopData"));
+console.log(LSshopData);
+const LSlocation = localStorage.getItem("locationState");
+const LSgenre = localStorage.getItem("genreState");
+
   let button;
-  if (props.shopData.length > props.searchCount+1) {
+  if (LSshopData.length > searchCount+1) {
      button=
       <Button
       variant="outlined"
@@ -59,12 +66,13 @@ const handleChange = (event, newValue) => {
   }
 
   let couponButton;
-  if(props.searchCount<2 && couponview){
+  if(searchCount<2 && couponview){
     couponButton=
     <Button 
       variant="contained" 
-      onClick={()=>
+      onClick={async()=>
       {handleCouponView()
+        await updateUserInfo()
         navigate("/Coupon", {
           state: {
             // locationPara: { locationState },
@@ -72,48 +80,68 @@ const handleChange = (event, newValue) => {
           },
         });
       }} >
-      {couponArray[props.searchCount]}円割引クーポンを取得して
+      {couponArray[searchCount]}円割引クーポンを取得して
       このお店に行く！</Button>
-
   }
+  const LSsingleShopData = JSON.parse(localStorage.getItem("shopData"))[localStorage.getItem("searchCount")];
+  const userId = localStorage.getItem("emailState");
+  const placeId = LSsingleShopData.place_id;
+  const shopName = LSsingleShopData.name;
+  const photoUrl = LSsingleShopData.photo;
+  const date= new Date();
+  const updateURL = "https://wfgyu9xut9.execute-api.us-east-1.amazonaws.com/prod?userId=" + userId + "&shopName=" + shopName + "&photoUrl="+ photoUrl +"&date="+ date +"&favoriteFlag=0&placeId=" + placeId;
+  const updateUserInfo = async () => {
+    try {
+      const updateUserInfo = await fetch(updateURL);
+    } catch (err) {
+      console.log("情報の更新に失敗しました");
+    }
+  };
+
   return (
-    
-     <Grid container alignitems='center' justifycontent='center' direction="column" maxWidth="sm" columnSpacing={2} sx={{alignItems: 'center'}}>
-      <Box>
+     <Grid container alignitems='center' justifycontent='center' direction="column" maxWidth="sm" columnSpacing={1} sx={{alignItems: 'center'}}>
+
         <Grid item>
-        <Typography component="legend">エリア:{location.state.locationPara.locationState}</Typography>
+        <Typography component="legend">エリア:{LSlocation}</Typography> 
         </Grid>
         <Grid item>
-        <Typography component="legend">ジャンル:{location.state.genrePara.genreState}</Typography>
-        </Grid>
-      </Box>  
+        <Typography component="legend">ジャンル:{LSgenre}</Typography>
+        </Grid>  
      <Box sx={{height:500}}>
-           <FirstShop searchCount={props.searchCount} shopData={props.shopData}/>
+            <FirstShop searchCount={searchCount} /> 
+           {/* <FirstShop /> */}
      </Box>
      <Container alignitems='center' justifycontent='center' direction="column" maxWidth="sm" sx={{alignItems: 'center'}}>
-     {couponButton}
+      <Box
+          sx={{
+            marginTop: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+      <Box></Box>
 
-     {/* <Button
-      variant="contained"
-      sx={{ mx: '30%' , mt: 3, mb: 2 , position: "relative", top: 20}}
-      className="search"
-      target="_blank" 
-      href={targetShopURL}>
-      このお店に行く！
-      </Button> */}
-      
-      <Button
+     <Button
             size="medium"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             className="search"
-            onClick={() => {
-              navigate("/review")
-            }}
+            onClick={()=>{
+              localStorage.setItem("searchCount",searchCount)
+              navigate("/review", {
+              state: {
+                // locationPara: { locationState },
+                // genrePara: { genreState },
+              },
+            })}}
           >
             <span>レビューコメント読む</span>
-          </Button>
+      </Button>
 
+     {couponButton}
+
+    
       {button}
      <Container>
      <Dialog
@@ -135,16 +163,17 @@ const handleChange = (event, newValue) => {
           <Button onClick={handleClose}>やめる</Button>
           <Button onClick={
             () => {
-            props.setSearchCount(props.searchCount + 1)
+            localStorage.setItem("searchCount",searchCount + 1);  
+            setSearchCount(searchCount + 1)
             handleClose()}}
           autoFocus>
             次の店舗を検索する！
           </Button>
         </DialogActions>
       </Dialog>
-      </Container>  
+      </Container> 
+      </Box>
      </Container>
-
 </Grid>
 
   );

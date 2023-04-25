@@ -33,6 +33,8 @@ export const TopChoice = (props) => {
       setIsLoading(true);
       const getShopData = await fetch(limitedURL);
       const result = await getShopData.json();
+      let jsonResult = JSON.stringify(result, undefined, 1);
+      localStorage.setItem("shopData",jsonResult);
       props.setShopData(result);
       setIsLoading(false);
     } catch (err) {
@@ -91,6 +93,8 @@ export const TopChoice = (props) => {
             className="search"
             loading={isLoading}
             onClick={async() => {
+              localStorage.setItem("locationState",locationState);
+              localStorage.setItem("genreState",genreState);
               await getShopLists();
               navigate("/main", {
                 state: {

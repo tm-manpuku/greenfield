@@ -22,24 +22,31 @@ import couponQR from "./data/couponQR.png"
 
 export const Coupon = (props) => {
   const navigate = useNavigate();
-  const targetShopURL = "https://www.google.com/maps/dir/?api=1&destination=" + props.shopData[props.searchCount].name + "&destination_place_id=" + props.shopData[props.searchCount].place_id
+  const targetShopURL = "https://www.google.com/maps/dir/?api=1&destination=" + LSsingleShopData.name + "&destination_place_id=" + LSsingleShopData.place_id ;
+
   return (
     <Container
       component="main"
       maxWidth="xs"
-      style={{
-        backgroundImage: `url(${Background})`,
-      }}
     >
+    <Box
+          sx={{
+            marginTop: 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
     <img src={couponQR} height="280" width="280" alt="クーポンの取得に失敗しました" />
     <Button
       variant="contained"
-      sx={{ mx: '30%' , mt: 3, mb: 2 , position: "relative", top: 20}}
+      sx={{ mx: '20%' , mt: 3, mb: 2 , position: "relative", top: 20}}
       className="search"
       target="_blank" 
       href={targetShopURL}>
-      このお店に行く！
+                  GoogleMapを起動する
       </Button>
+      </Box>
     </Container>
   );
 };

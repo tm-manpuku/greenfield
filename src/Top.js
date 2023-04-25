@@ -23,17 +23,16 @@ import couponExplain from "./couponExplain.png";
 
 export const Top = (props) => {
   const navigate = useNavigate();
-  const [locationState, setLocation] = useState("");
-  const [genreState, setGenre] = useState("");
-  const registerURL = "https://zg375fp37c.execute-api.us-east-1.amazonaws.com/sample?userid=" + props.emailState;
+  const registerURL = "https://wfgyu9xut9.execute-api.us-east-1.amazonaws.com/prod?userId=" + props.emailState;
   const [clickCount, setCount] = useState(0);
 
 
   const getEmailRegister = async () => {
     try {
       const getShopData = await fetch(registerURL);
+      localStorage.setItem("emailState", props.emailState);
     } catch (err) {
-      console.log("検索に失敗しました");
+      console.log("ユーザ登録に失敗しました");
     }
   };
 
@@ -43,31 +42,31 @@ export const Top = (props) => {
     <Container
       component="main"
       maxWidth="xs"
-      style={{
-        backgroundImage: `url(${Background})`,
-      }}
     >
       <Paper
         variant="outlined"
         sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
       >
         <CssBaseline />
-        {/* <Box
+        <Box
           sx={{
             marginTop: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
-        > */}
-<>
+        >
+ 
+
         {clickCount == 0 ?
           <img src={TopLogoimage} onClick={() => setCount(clickCount + 1)} /> :
           clickCount == 1 ?
-              <img src={couponExplain} height="330" width="330" onClick={() => setCount(clickCount + 1)} />:
-          <>
+              <img src={couponExplain} height="345" width="345" onClick={() => setCount(clickCount + 1)} /> :
+              // <Grid container alignItems="center" justify="center" style={{ backgroundColor: "red" }}>
+  // <Grid item xs={8}  alignItems="center" style={{ backgroundColor: "blue" }}>
+<>
          <Typography component="h1" variant="h5">
-            Emailを入力して始めよう!
+             Emailを入力して始めよう!
           </Typography>
           <TextField
             margin="normal"
@@ -81,12 +80,12 @@ export const Top = (props) => {
               props.setEmailAdress(e.target.value);
             }}
           />
+
           <LoadingButton
             size="medium"
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             className="search"
-            //loading={isLoading}
             onClick={async() => {
               await getEmailRegister()
               navigate("/choice", {
@@ -95,65 +94,18 @@ export const Top = (props) => {
                   // genrePara: { genreState },
                 },
               });
-              // }
             }}
           >
-           
             <span>お店を開拓してみる</span>
-          </LoadingButton>
-          </>
-          }
+                    </LoadingButton>
 </>
 
-         
+          }
 
 
-        
-          {/* <Typography component="h1" variant="h4">
-            ねえ、ご飯屋さん開拓しない？
-          </Typography>
-          <Typography component="h1" variant="h6">
-            今日のランチ新しいお店を開拓しませんか？早く決めるとお得に開拓できるよ！
-          </Typography> */}
-
-          {/* <Typography component="h1" variant="h8">
-            Emailを入力して始めよう!
-          </Typography>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            autoFocus
-            id="outlined-required"
-            label="E-mail"
-            type="E-mailを入力"
-            onChange={(e) => {
-              props.setEmailAdress(e.target.value);
-            }}
-          />
-          <LoadingButton
-            size="medium"
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            className="search"
-            //loading={isLoading}
-            onClick={async() => {
-              await getEmailRegister()
-              navigate("/choice", {
-                state: {
-                  // locationPara: { locationState },
-                  // genrePara: { genreState },
-                },
-              });
-              // }
-            }}
-          >
-           
-            <span>お店を開拓する</span>
-          </LoadingButton> */}
-        {/* </Box> */}
-      </Paper>
-    </Container>
+        </Box>
+       </Paper>
+     </Container>
   );
 };
 

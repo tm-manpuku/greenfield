@@ -26,22 +26,24 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import CommentIcon from '@mui/icons-material/Comment';
 import { useNavigate } from "react-router-dom";
-
+import { Button } from "@mui/material"; 
+import Box from '@mui/material/Box';
 
 const FirstShop = (props) =>{
    const navigate = useNavigate();
-   const singleShopData = props.shopData[props.searchCount];
+   const LSshopData = JSON.parse(localStorage.getItem("shopData"));
+   const singleShopData = LSshopData[props.searchCount];
+   //const LSSearchcount = localStorage.getItem("searchCount");
+   //const LSsingleShopData = localStorage.getItem("shopData")[LSSearchcount];
    const [open, setOpen] = React.useState(false);
 
    const handleClick = () => {
      setOpen(!open);
    };
  const reviewData = [];
+
+
  for (let i= 0; i<singleShopData.reviews.length; i++){
   reviewData.push(
  <ListItemButton sx={{ pl: 4 }}>
@@ -73,42 +75,30 @@ const FirstShop = (props) =>{
      alt="ShopPhoto"
    />
    <CardContent>
+   <Box
+          sx={{
+            marginTop: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
       <Typography component="legend">平均評価：{singleShopData.rating}</Typography>
       <Rating name="half-rating-read" value={singleShopData.rating}  precision={0.5} readOnly />
       <Typography component="legend"></Typography>
-      {/* <ul>平均評価{}</ul> */}
       <Typography component="legend">ユーザのコメント数：{singleShopData.user_ratings_total}</Typography>
-      
-      <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id = "nested-list-subheader" >
-          口コミを見てみる
-        </ListSubheader>
-      }
-    >
-    
-      <ListItemButton 
-      // onClick={navigate("/review", {
-      //   state: {}})}
-      onClick={handleClick}  
-        >
-        <ListItemIcon>
-          <CommentIcon />
-        </ListItemIcon>
-        <ListItemText primary = "Review" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-            {reviewData}
-        </List>
-      </Collapse>
-    </List>
+      {/* <Button
+            size="medium"
+            variant="outlined"
+            sx={{ mt: 3, mb: 2 }}
+            className="search"
+            onClick={navigate("/review")}
+          >
+            <span>レビューコメント読む</span>
+      </Button> */}
 
       {/* <Typography component="legend">穴場度:85点</Typography> */}
+    </Box>
    </CardContent>
    {/* <CardActions disableSpacing>
      <IconButton aria-label="add to favorites">

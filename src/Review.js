@@ -21,23 +21,23 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export const Review = (props) => {
-  const singleShopData = props.shopData[props.searchCount];
+  const LSsingleShopData = JSON.parse(localStorage.getItem("shopData"))[localStorage.getItem("searchCount")];
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen(!open);
   };
   const navigate = useNavigate();
   const reviewData = [];
-  for (let i= 0; i<singleShopData.reviews.length; i++){
+  for (let i= 0; i<LSsingleShopData.reviews.length; i++){
    reviewData.push(
   <ListItemButton sx={{ pl: 4 }}>
-  <ListItemText primary={singleShopData.reviews[i]} />
+  <ListItemText primary={LSsingleShopData.reviews[i]} />
   </ListItemButton>
    )
   };
 
   const accordionReviewData = [];
-  for (let i = 0; i < singleShopData.reviews.length; i++){
+  for (let i = 0; i < LSsingleShopData.reviews.length; i++){
     accordionReviewData.push(
         <Accordion>
         <AccordionSummary
@@ -49,7 +49,7 @@ export const Review = (props) => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            {singleShopData.reviews[i]}
+            {LSsingleShopData.reviews[i]}
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -57,45 +57,9 @@ export const Review = (props) => {
   };
 
   return (
-    <>
     <div>
      {accordionReviewData}
     </div>
-    
-
-
-
-
-    <Container
-      component="main"
-      maxWidth="xs"
-    >
-      <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id = "nested-list-subheader" >
-          口コミを見てみる
-        </ListSubheader>
-      }
-    >
-    
-      <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <CommentIcon />
-        </ListItemIcon>
-        <ListItemText primary = "Review" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-            {reviewData}
-        </List>
-      </Collapse>
-    </List>
-    </Container>
-    </>
   );
 };
 
