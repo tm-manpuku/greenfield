@@ -79,8 +79,9 @@ const handleChange = (event, newValue) => {
       {couponArray[searchCount]}円割引クーポンを取得して
       このお店に行く！</Button>
   }
-  const LSsingleShopData = JSON.parse(localStorage.getItem("shopData"))[localStorage.getItem("searchCount")];
+  const LSsingleShopData = JSON.parse(localStorage.getItem("shopData"))[searchCount];
   const userId = localStorage.getItem("emailState");
+  console.log(LSsingleShopData);
   const placeId = LSsingleShopData.place_id;
   const shopName = LSsingleShopData.name;
   const photoUrl = LSsingleShopData.photo;
