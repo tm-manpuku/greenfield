@@ -19,14 +19,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from "react-router-dom";
 
 export const Main = (props) => {
+const LSlocation = localStorage.getItem("locationState");
+const LSshopData = JSON.parse(localStorage.getItem("shopData"));
 const location = useLocation();
 const navigate = useNavigate();
+const [searchCount, setSearchCount] = useState(0);
 const [couponview,setCouponView] = useState(true);
 const [value, setValue] = useState("1");
 const [open, setOpen] = useState(false);
 const couponArray = [500,200];
-const [searchCount, setSearchCount] = useState(0);
-
 const handleClickOpen = () => {
   setOpen(true);
 };
@@ -40,11 +41,6 @@ const handleCouponView = () =>{
 const handleChange = (event, newValue) => {
   setValue(newValue);
 }
-localStorage.setItem("searchCount",0);
-const LSshopData = JSON.parse(localStorage.getItem("shopData"));
-console.log(LSshopData);
-const LSlocation = localStorage.getItem("locationState");
-const LSgenre = localStorage.getItem("genreState");
 
   let button;
   if (LSshopData.length > searchCount+1) {
@@ -99,17 +95,17 @@ const LSgenre = localStorage.getItem("genreState");
   };
 
   return (
+    
      <Grid container alignitems='center' justifycontent='center' direction="column" maxWidth="sm" columnSpacing={1} sx={{alignItems: 'center'}}>
 
         <Grid item>
-        <Typography component="legend">エリア:{LSlocation}</Typography> 
+        <Typography component="legend">エリア:{location.state.locationPara.locationState}</Typography>
         </Grid>
         <Grid item>
-        <Typography component="legend">ジャンル:{LSgenre}</Typography>
+        <Typography component="legend">ジャンル:{location.state.genrePara.genreState}</Typography>
         </Grid>  
      <Box sx={{height:500}}>
-            <FirstShop searchCount={searchCount} /> 
-           {/* <FirstShop /> */}
+           <FirstShop searchCount={searchCount}/>
      </Box>
      <Container alignitems='center' justifycontent='center' direction="column" maxWidth="sm" sx={{alignItems: 'center'}}>
       <Box
@@ -128,7 +124,7 @@ const LSgenre = localStorage.getItem("genreState");
             sx={{ mt: 3, mb: 2 }}
             className="search"
             onClick={()=>{
-              localStorage.setItem("searchCount",searchCount)
+              console.log("レビューボタン")
               navigate("/review", {
               state: {
                 // locationPara: { locationState },
@@ -162,9 +158,9 @@ const LSgenre = localStorage.getItem("genreState");
         <DialogActions>
           <Button onClick={handleClose}>やめる</Button>
           <Button onClick={
-            () => {
-            localStorage.setItem("searchCount",searchCount + 1);  
-            setSearchCount(searchCount + 1)
+            async() => {
+            await setSearchCount(searchCount + 1)
+            localStorage.setItem("searchCount",searchCount);
             handleClose()}}
           autoFocus>
             次の店舗を検索する！

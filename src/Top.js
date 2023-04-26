@@ -17,6 +17,8 @@ import { getShop } from "./utils/get";
 import Background from "./TopBackgroud.jpg";
 import TopLogoimage from "./TopLogoimage.png";
 import couponExplain from "./couponExplain.png";
+import couponExplain1  from "./couponExplain1.png";
+import couponExplain2  from "./couponExplain2.png";
 
 
 
@@ -39,13 +41,17 @@ export const Top = (props) => {
 
 
   return (
+
     <Container
       component="main"
       maxWidth="xs"
+      
+      
     >
       <Paper
-        variant="outlined"
-        sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+        // variant="outlined"
+        elevation={0}
+        sx={{ my: { xs: 4, md: 6 }, p: { xs: 2, md: 3 } }}
       >
         <CssBaseline />
         <Box
@@ -54,7 +60,10 @@ export const Top = (props) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            
+           
           }}
+          
         >
  
 
@@ -62,10 +71,16 @@ export const Top = (props) => {
           <img src={TopLogoimage} onClick={() => setCount(clickCount + 1)} /> :
           clickCount == 1 ?
               <img src={couponExplain} height="345" width="345" onClick={() => setCount(clickCount + 1)} /> :
+              // <>
+              // <img src={couponExplain1} sx={{
+              //     m: 0 }}height="345" width="345" onClick={() => setCount(clickCount + 1)} /> 
+              //   <img src={couponExplain2} sx={{
+              //     m:0}} height="300" width="300" onClick={() => setCount(clickCount + 1)} />
+              //   </>:
               // <Grid container alignItems="center" justify="center" style={{ backgroundColor: "red" }}>
   // <Grid item xs={8}  alignItems="center" style={{ backgroundColor: "blue" }}>
 <>
-         <Typography component="h1" variant="h5">
+         <Typography component="h1" variant="h5" fontFamily={'Roboto'}>
              Emailを入力して始めよう!
           </Typography>
           <TextField
@@ -88,7 +103,7 @@ export const Top = (props) => {
             className="search"
             onClick={async() => {
               await getEmailRegister()
-              navigate("/choice", {
+              navigate("/search", {
                 state: {
                   // locationPara: { locationState },
                   // genrePara: { genreState },

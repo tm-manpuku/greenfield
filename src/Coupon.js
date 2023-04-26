@@ -22,8 +22,9 @@ import couponQR from "./data/couponQR.png"
 
 export const Coupon = (props) => {
   const navigate = useNavigate();
+  const LSsingleShopData = JSON.parse(localStorage.getItem("shopData"))[localStorage.getItem("searchCount")];
   const targetShopURL = "https://www.google.com/maps/dir/?api=1&destination=" + LSsingleShopData.name + "&destination_place_id=" + LSsingleShopData.place_id ;
-
+  const LSsearchCount = localStorage.getItem("searchCount");
   return (
     <Container
       component="main"
@@ -36,8 +37,27 @@ export const Coupon = (props) => {
             flexDirection: "column",
             alignItems: "center",
           }}
-        >
-    <img src={couponQR} height="280" width="280" alt="クーポンの取得に失敗しました" />
+      >
+
+        <img src={couponQR} height="280" width="280" alt="クーポンの取得に失敗しました" />
+        {LSsearchCount == 0 ?
+          <Typography component="h1" variant="h5" fontFamily={'Roboto'}>
+            500円クーポン!
+          </Typography>:
+          LSsearchCount == 1 ?
+             <Typography component="h1" variant="h5" fontFamily={'Roboto'}>
+            200円クーポン!
+            </Typography> :
+          LSsearchCount > 1 ?
+              <Typography component="h1" variant="h5" fontFamily={'Roboto'}>
+            ３回以上の検索だからクーポンはないよ・・・
+              </Typography> :
+              <Typography component="h1" variant="h5" fontFamily={'Roboto'}>
+            ３回以上の検索だからクーポンはないよ・・・
+              </Typography> 
+              
+}
+        
     <Button
       variant="contained"
       sx={{ mx: '20%' , mt: 3, mb: 2 , position: "relative", top: 20}}
