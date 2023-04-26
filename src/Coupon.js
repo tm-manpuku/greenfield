@@ -41,19 +41,19 @@ export const Coupon = (props) => {
 
         <img src={couponQR} height="280" width="280" alt="クーポンの取得に失敗しました" />
         {LSsearchCount == 0 ?
-          <Typography component="h1" variant="h5" fontFamily={'Roboto'}>
-            500円クーポン!
+          <Typography component="h1" variant="h4" color={"#FF914D"} font-weight={"bold"} fontFamily={'Roboto'}>
+            500円OFFクーポン!
           </Typography>:
           LSsearchCount == 1 ?
-             <Typography component="h1" variant="h5" fontFamily={'Roboto'}>
-            200円クーポン!
+             <Typography component="h1" variant="h4" color={"#FF914D"} font-weight={"bold"} fontFamily={'Roboto'}>
+            200円OFFクーポン!
             </Typography> :
           LSsearchCount > 1 ?
-              <Typography component="h1" variant="h5" fontFamily={'Roboto'}>
-            ３回以上の検索だからクーポンはないよ・・・
+              <Typography component="h1" variant="h4" fontFamily={'Roboto'}>
+            残念。クーポンはないよ・・・
               </Typography> :
-              <Typography component="h1" variant="h5" fontFamily={'Roboto'}>
-            ３回以上の検索だからクーポンはないよ・・・
+              <Typography component="h1" variant="h4" fontFamily={'Roboto'}>
+            残念。クーポンはないよ・・・
               </Typography> 
               
 }

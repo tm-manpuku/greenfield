@@ -28,6 +28,8 @@ const [couponview,setCouponView] = useState(true);
 const [value, setValue] = useState("1");
 const [open, setOpen] = useState(false);
 const couponArray = [500,200];
+const LSsingleShopData = JSON.parse(localStorage.getItem("shopData"))[searchCount];
+const targetShopURL = "https://www.google.com/maps/dir/?api=1&destination=" + LSsingleShopData.name + "&destination_place_id=" + LSsingleShopData.place_id ;
 const handleClickOpen = () => {
   setOpen(true);
 };
@@ -47,7 +49,7 @@ const handleChange = (event, newValue) => {
      button=
       <Button
       variant="outlined"
-      sx={{ mx: '30%' , mt: 3, mb: 2 , position: "relative", top: 20}}
+      sx={{ mx: '30%' , mt: 3, mb: 2 , position: "relative", top: 5}}
       className="search"
       onClick={handleClickOpen}
       >他のお店を開拓
@@ -57,7 +59,7 @@ const handleChange = (event, newValue) => {
     button=
      <Button
       variant="outlined"
-      sx={{ mx: '30%' , mt: 3, mb: 2 , position: "relative", top: 20}}
+      sx={{ mx: '30%' , mt: 3, mb: 2 , position: "relative", top: 5}}
       className="search" disabled>他のお店を開拓</Button>
   }
 
@@ -79,10 +81,19 @@ const handleChange = (event, newValue) => {
       }} >
       {couponArray[searchCount]}円割引クーポンを取得して
       このお店に行く！</Button>
-  }
-  const LSsingleShopData = JSON.parse(localStorage.getItem("shopData"))[searchCount];
+  }else if (searchCount >= 2){
+    couponButton=
+    <Button
+    variant="contained"
+    sx={{ mx: '20%' , mt: 3, mb: 2 , position: "relative", top: 5}}
+    className="search"
+    target="_blank" 
+    href={targetShopURL}>
+                GoogleMapを起動する
+    </Button>
+  };
+  
   const userId = localStorage.getItem("emailState");
-  console.log(LSsingleShopData);
   const placeId = LSsingleShopData.place_id;
   const shopName = LSsingleShopData.name;
   const photoUrl = LSsingleShopData.photo;
@@ -99,14 +110,13 @@ const handleChange = (event, newValue) => {
   return (
     
      <Grid container alignitems='center' justifycontent='center' direction="column" maxWidth="sm" columnSpacing={1} sx={{alignItems: 'center'}}>
-
         <Grid item>
         <Typography component="legend">エリア:{location.state.locationPara.locationState}</Typography>
         </Grid>
         <Grid item>
         <Typography component="legend">ジャンル:{location.state.genrePara.genreState}</Typography>
         </Grid>  
-     <Box sx={{height:500}}>
+     <Box sx={{height:400}}>
            <FirstShop searchCount={searchCount}/>
      </Box>
      <Container alignitems='center' justifycontent='center' direction="column" maxWidth="sm" sx={{alignItems: 'center'}}>
@@ -118,7 +128,6 @@ const handleChange = (event, newValue) => {
             alignItems: "center",
           }}
         >
-      <Box></Box>
 
      <Button
             size="medium"
@@ -127,6 +136,7 @@ const handleChange = (event, newValue) => {
             className="search"
             onClick={()=>{
               console.log("レビューボタン")
+              localStorage.setItem("searchCount",searchCount);
               navigate("/review", {
               state: {
                 // locationPara: { locationState },
@@ -161,7 +171,7 @@ const handleChange = (event, newValue) => {
           <Button onClick={handleClose}>やめる</Button>
           <Button onClick={
             async() => {
-            await setSearchCount(searchCount + 1)
+            await setSearchCount(searchCount + 1);
             localStorage.setItem("searchCount",searchCount);
             handleClose()}}
           autoFocus>

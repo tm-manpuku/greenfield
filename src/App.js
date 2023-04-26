@@ -135,7 +135,7 @@ function App() {
                     </a>
                     <a href={pageURL[1]}>
                     <MenuItem key={pages[1]} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center" href={pageURL[1]}>{pages[1]}</Typography>
+                      <Typography textAlign="center" >{pages[1]}</Typography>
                     </MenuItem>
                     </a>
                     {/* <a href={pageURL[2]} 
