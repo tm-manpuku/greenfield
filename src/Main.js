@@ -68,6 +68,7 @@ const handleChange = (event, newValue) => {
       variant="contained" 
       onClick={async()=>
       {handleCouponView()
+        localStorage.setItem("searchCount",searchCount);
         await updateUserInfo()
         navigate("/Coupon", {
           state: {
