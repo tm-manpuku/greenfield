@@ -138,7 +138,7 @@ function App() {
                       <Typography textAlign="center" >{pages[1]}</Typography>
                     </MenuItem>
                     </a>
-                    {/* <a href={pageURL[2]} 
+                    <a href={pageURL[2]} 
                     // onClick={async()=>{
                     //   console.log("クリックされました");
                     //   await getUserInfo()
@@ -147,7 +147,7 @@ function App() {
                     <MenuItem key={pages[2]} onClick={handleCloseNavMenu}>
                       <Typography textAlign="center" >{pages[2]}</Typography>
                     </MenuItem>
-                    </a> */}
+                    </a>
                     
                 
                 </Menu>
@@ -190,14 +190,14 @@ function App() {
                   >
                     {pages[1]}
                   </Button>                  
-                  {/* <Button
+                  <Button
                     key={pages[2]}
                     onClick={handleCloseNavMenu}
                     href={pages[2]}
                     sx={{ my: 2, color: "white", display: "block" }}
                   >
                     {pages[2]}
-                  </Button> */}
+                  </Button>
               </Box>
 
               <Box sx={{ flexGrow: 0 }}>

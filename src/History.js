@@ -8,12 +8,12 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Box from "@mui/material/Box";
 import { useEffect } from "react";
+import Link from '@mui/material/Link';
+import { Button } from "@mui/material";
 
  export const History = () => {
     const userId = localStorage.getItem("emailState");
     const getUserInfoURL = "https://wfgyu9xut9.execute-api.us-east-1.amazonaws.com/prod?userId=" + userId;
-    const LSshopData = JSON.parse(localStorage.getItem("Data"));
-    const listHistory = [];
     useEffect(() => {
         const getUserInfo = async () => {
             try {
@@ -22,45 +22,61 @@ import { useEffect } from "react";
                 const getUserData = await fetch(getUserInfoURL);
                 const result = await getUserData.json();
                 let jsonResult = JSON.stringify(result, undefined, 1);
-                console.log(jsonResult);
+                //console.log(jsonResult.shopInfo);
                 localStorage.setItem("userData",jsonResult);
                 // setIsLoading(false);
+
               } catch (err) {
                 console.log("検索に失敗しました");
               }
         };
         getUserInfo();
       }, []);
+      const LSuserData = JSON.parse(localStorage.getItem("userData"));
+      //console.log(LSuserData.shopInfo);
+      const shopInfoArray = LSuserData.shopInfo;
+      const listHistory = [];
+      //const targetShopURL = "https://www.google.com/maps/dir/?api=1&destination=" + LSsingleShopData.name + "&destination_place_id=" + LSsingleShopData.place_id ;
 
-
-    // for(let i = 0;i<shopData.length;i++){
-    //     listHistory.push(
-    //     <>
-    //     <ListItem alignItems="flex-start">
-    //     <ListItemAvatar>
-    //       <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-    //     </ListItemAvatar>
-    //     <ListItemText
-    //       primary="Brunch this weekend?"
-    //       secondary={
-    //         <React.Fragment>
-    //           <Typography
-    //             sx={{ display: 'inline' }}
-    //             component="span"
-    //             variant="body2"
-    //             color="text.primary"
-    //           >
-    //             Ali Connors
-    //           </Typography>
-    //           {" — I'll be in your neighborhood doing errands this…"}
-    //         </React.Fragment>
-    //       }
-    //     />
-    //   </ListItem>
-    //   <Divider variant="inset" component="li" />
-    //   </>  
-    //     )
-    // };
+    for(let i = 0;i<shopInfoArray.length;i++){
+        const targetShopURL = "https://www.google.com/maps/dir/?api=1&destination=" + shopInfoArray[i].shopName + "&destination_place_id=" + shopInfoArray[i].placeId; 
+        console.log(targetShopURL);
+        listHistory.push(
+        <>
+        <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt="Remy Sharp" src={shopInfoArray[i].photoUrl} />
+        </ListItemAvatar>
+        <ListItemText
+          primary={shopInfoArray[i].shopName}
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{textDecoration: 'underline'}}
+                display= 'inline' 
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                開拓日
+              </Typography>
+              <br />{shopInfoArray[i].date} <br />
+               <Button
+                variant="outlined"
+                sx={{ mx: '10%' , mt: 2, mb: 1 , position: "relative", top: 1}}
+                className="search"
+                target="_blank" 
+                href={targetShopURL}>
+                  もう一度このお店に行く
+                </Button>
+            </React.Fragment>
+          }
+        />
+      </ListItem>
+      <Divider variant="inset" component="li" />
+      </>  
+        )
+    };
   return (
     <Box
     sx={{
@@ -71,7 +87,8 @@ import { useEffect } from "react";
     }}
   >
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <ListItem alignItems="flex-start">
+      {listHistory}
+      {/* <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
@@ -135,7 +152,7 @@ import { useEffect } from "react";
             </React.Fragment>
           }
         />
-      </ListItem>
+      </ListItem> */}
     </List>
     </Box>
   );
