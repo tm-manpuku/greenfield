@@ -79,7 +79,7 @@ const handleChange = (event, newValue) => {
           },
         });
       }} >
-      {couponArray[searchCount]}円割引クーポンを取得して
+      {couponArray[searchCount]}円割引クーポンを取得して<br />
       このお店に行く！</Button>
   }else if (searchCount >= 2){
     couponButton=

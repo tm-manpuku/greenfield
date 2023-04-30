@@ -24,7 +24,7 @@ import { Button } from "@mui/material";
                 let jsonResult = JSON.stringify(result, undefined, 1);
                 //console.log(jsonResult.shopInfo);
                 localStorage.setItem("userData",jsonResult);
-                // setIsLoading(false);
+                //LSがNullの時は履歴なしとする。
 
               } catch (err) {
                 console.log("検索に失敗しました");
@@ -33,11 +33,31 @@ import { Button } from "@mui/material";
         getUserInfo();
       }, []);
       const LSuserData = JSON.parse(localStorage.getItem("userData"));
+      let listHistory = [];
       //console.log(LSuserData.shopInfo);
-      const shopInfoArray = LSuserData.shopInfo;
-      const listHistory = [];
       //const targetShopURL = "https://www.google.com/maps/dir/?api=1&destination=" + LSsingleShopData.name + "&destination_place_id=" + LSsingleShopData.place_id ;
-
+    if(LSuserData===null || LSuserData.shopInfo.length==0){
+        listHistory = 
+        <Box
+        sx={{
+          marginTop: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+         >
+              <Typography
+                sx={{ display: 'inline' }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                まだ開拓したお店が無いようです<br />
+                searchタブからお店を検索してみよう!
+              </Typography>
+        </Box>
+    }else {
+    const shopInfoArray = LSuserData.shopInfo;
     for(let i = 0;i<shopInfoArray.length;i++){
         const targetShopURL = "https://www.google.com/maps/dir/?api=1&destination=" + shopInfoArray[i].shopName + "&destination_place_id=" + shopInfoArray[i].placeId; 
         console.log(targetShopURL);
@@ -77,6 +97,7 @@ import { Button } from "@mui/material";
       </>  
         )
     };
+};
   return (
     <Box
     sx={{
